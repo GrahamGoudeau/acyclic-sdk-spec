@@ -1,0 +1,5 @@
+[
+  {"name":"inline html, truncated","max_chars":24,
+   "input":{"resourceType":"DocumentReference","id":"d3","description":"ED note","content":[{"attachment":{"contentType":"text/html","data":"PHA+UGF0aWVudCBzZWVuIGluIEVELjwvcD4KPHA+ICBDaGVzdCBwYWluICByZXNvbHZlZC48L3A+"}}]},
+   "expected":{"id":"d3","title":"ED note","text":"Patient seen in ED. Ches","truncated":true}}
+]

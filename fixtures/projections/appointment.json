@@ -1,0 +1,5 @@
+[
+  {"name":"booked with practitioner and location",
+   "input":{"resourceType":"Appointment","id":"ap1","status":"booked","serviceType":[{"text":"Follow-up"}],"description":"Diabetes follow-up","start":"2026-12-02T14:00:00Z","end":"2026-12-02T14:20:00Z","participant":[{"actor":{"reference":"Patient/p1","display":"Josefina Diaz"}},{"actor":{"reference":"Location/l1","display":"Main Street Clinic"}},{"actor":{"reference":"Practitioner/pr1","display":"Dr. Ana Reyes"}}]},
+   "expected":{"id":"ap1","status":"booked","start":"2026-12-02T14:00:00Z","end":"2026-12-02T14:20:00Z","type":"Follow-up","description":"Diabetes follow-up","practitioner":"Dr. Ana Reyes","location":"Main Street Clinic"}}
+]

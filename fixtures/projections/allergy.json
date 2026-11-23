@@ -1,0 +1,5 @@
+[
+  {"name":"dedupe reactions",
+   "input":{"resourceType":"AllergyIntolerance","id":"a1","clinicalStatus":{"coding":[{"code":"active"}]},"criticality":"high","code":{"coding":[{"system":"http://www.nlm.nih.gov/research/umls/rxnorm","code":"7980","display":"Penicillin G"}]},"reaction":[{"manifestation":[{"text":"Hives"},{"coding":[{"display":"Wheezing"}]}]},{"manifestation":[{"text":"Hives"}]}],"recordedDate":"2010-05-05"},
+   "expected":{"id":"a1","display":"Penicillin G","clinical_status":"active","criticality":"high","reactions":["Hives","Wheezing"],"recorded":"2010-05-05"}}
+]

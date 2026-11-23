@@ -1,0 +1,5 @@
+[
+  {"name":"office visit",
+   "input":{"resourceType":"Encounter","id":"e1","status":"finished","class":{"system":"http://terminology.hl7.org/CodeSystem/v3-ActCode","code":"AMB"},"type":[{"text":"Office Visit"}],"period":{"start":"2026-09-14T09:00:00Z","end":"2026-09-14T09:40:00Z"},"reasonCode":[{"coding":[{"display":"Diabetes follow-up"}]}],"location":[{"location":{"reference":"Location/l1","display":"Main Street Clinic"}}],"participant":[{"type":[{"text":"ATND"}]},{"individual":{"reference":"Practitioner/pr1","display":"Dr. Ana Reyes"}}]},
+   "expected":{"id":"e1","status":"finished","class":"AMB","type":"Office Visit","start":"2026-09-14T09:00:00Z","end":"2026-09-14T09:40:00Z","reason":"Diabetes follow-up","location":"Main Street Clinic","provider":"Dr. Ana Reyes"}}
+]

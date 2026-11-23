@@ -1,0 +1,8 @@
+[
+  {"name":"progress note",
+   "input":{"resourceType":"DocumentReference","id":"d1","status":"current","type":{"coding":[{"system":"http://loinc.org","code":"11506-3","display":"Progress note"}]},"date":"2026-09-14T10:00:00Z","author":[{"reference":"Practitioner/pr1","display":"Dr. Ana Reyes"}],"content":[{"attachment":{"contentType":"text/plain","title":"Diabetes visit","url":"Binary/b1"}}]},
+   "expected":{"id":"d1","title":"Diabetes visit","type":"Progress note","date":"2026-09-14T10:00:00Z","author":"Dr. Ana Reyes","content_type":"text/plain","status":"current"}},
+  {"name":"description wins as title",
+   "input":{"resourceType":"DocumentReference","id":"d2","description":"Discharge summary","type":{"text":"Summary"}},
+   "expected":{"id":"d2","title":"Discharge summary","type":"Summary"}}
+]

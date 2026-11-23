@@ -1,0 +1,8 @@
+[
+  {"name":"text display, two codings",
+   "input":{"resourceType":"Condition","id":"c1","clinicalStatus":{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/condition-clinical","code":"active"}]},"code":{"text":"Type 2 diabetes","coding":[{"system":"http://snomed.info/sct","code":"44054006","display":"Diabetes mellitus type 2"},{"system":"http://hl7.org/fhir/sid/icd-10-cm","code":"E11.9"}]},"onsetDateTime":"2014-06-01","recordedDate":"2014-06-03"},
+   "expected":{"id":"c1","display":"Type 2 diabetes","codes":["SNOMED|44054006","ICD-10-CM|E11.9"],"clinical_status":"active","onset":"2014-06-01","recorded":"2014-06-03"}},
+  {"name":"code-only coding, onset period, unknown system",
+   "input":{"resourceType":"Condition","id":"c2","code":{"coding":[{"system":"urn:oid:1.2.3","code":"X1"}]},"onsetPeriod":{"start":"2020-02-02"}},
+   "expected":{"id":"c2","display":"X1","codes":["urn:oid:1.2.3|X1"],"onset":"2020-02-02"}}
+]

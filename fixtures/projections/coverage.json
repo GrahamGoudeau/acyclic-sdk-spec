@@ -1,0 +1,5 @@
+[
+  {"name":"commercial plan",
+   "input":{"resourceType":"Coverage","id":"cv1","status":"active","subscriberId":"XJH123456","relationship":{"coding":[{"code":"self","display":"Self"}]},"payor":[{"reference":"Organization/o1","display":"Blue Harbor Health Plan"}],"class":[{"type":{"coding":[{"code":"group"}]},"value":"G-77"},{"type":{"coding":[{"code":"plan"}]},"value":"PPO-500","name":"Harbor PPO 500"}],"period":{"start":"2026-01-01","end":"2026-12-31"}},
+   "expected":{"id":"cv1","status":"active","payer":"Blue Harbor Health Plan","plan":"PPO-500","member_id":"XJH123456","relationship":"Self","period_start":"2026-01-01","period_end":"2026-12-31"}}
+]

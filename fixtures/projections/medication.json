@@ -1,0 +1,8 @@
+[
+  {"name":"codeable concept",
+   "input":{"resourceType":"MedicationRequest","id":"m1","status":"active","medicationCodeableConcept":{"coding":[{"system":"http://www.nlm.nih.gov/research/umls/rxnorm","code":"860975","display":"metformin 500 MG Oral Tablet"}]},"dosageInstruction":[{"text":"1 tablet twice daily with meals"}],"authoredOn":"2023-03-01","requester":{"reference":"Practitioner/pr1","display":"Dr. Ana Reyes"}},
+   "expected":{"id":"m1","display":"metformin 500 MG Oral Tablet","codes":["RXNORM|860975"],"status":"active","dosage":"1 tablet twice daily with meals","authored_on":"2023-03-01","requester":"Dr. Ana Reyes"}},
+  {"name":"medication reference",
+   "input":{"resourceType":"MedicationRequest","id":"m2","status":"stopped","medicationReference":{"reference":"Medication/x","display":"lisinopril 10 mg"},"requester":{"reference":"Practitioner/pr2"}},
+   "expected":{"id":"m2","display":"lisinopril 10 mg","status":"stopped","requester":"Practitioner/pr2"}}
+]

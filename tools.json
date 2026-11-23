@@ -1,0 +1,279 @@
+{
+  "version": "0.1.0",
+  "notes": "Tool contract shared by acyclic-sdk-js, -go and -rs. Every tool acts on the session's one patient. Inputs are JSON Schema; outputs are the projections in projections.json.",
+  "tools": [
+    {
+      "name": "find_patient",
+      "description": "Search for a patient. Most EHRs need family + given + birthdate, or an identifier (MRN). Returns up to 10 matches. Only available before the session is bound to a patient.",
+      "kind": "read",
+      "unbound_only": true,
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "family": {
+            "type": "string",
+            "description": "Family (last) name"
+          },
+          "given": {
+            "type": "string",
+            "description": "Given (first) name"
+          },
+          "birthdate": {
+            "type": "string",
+            "description": "YYYY-MM-DD"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "MRN or other identifier value"
+          }
+        },
+        "additionalProperties": false
+      },
+      "output": "patient[]"
+    },
+    {
+      "name": "select_patient",
+      "description": "Bind this session to one patient id from find_patient. Can be called once; every later tool acts on this patient.",
+      "kind": "read",
+      "unbound_only": true,
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "patient_id"
+        ],
+        "additionalProperties": false
+      },
+      "output": "patient"
+    },
+    {
+      "name": "get_patient",
+      "description": "Demographics for the session's patient.",
+      "kind": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "output": "patient"
+    },
+    {
+      "name": "list_conditions",
+      "description": "Problem list and diagnoses.",
+      "kind": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "resolved",
+              "all"
+            ],
+            "default": "active"
+          }
+        },
+        "additionalProperties": false
+      },
+      "output": "condition[]"
+    },
+    {
+      "name": "list_medications",
+      "description": "Medication orders (MedicationRequest).",
+      "kind": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "stopped",
+              "all"
+            ],
+            "default": "active"
+          }
+        },
+        "additionalProperties": false
+      },
+      "output": "medication[]"
+    },
+    {
+      "name": "list_allergies",
+      "description": "Allergies and intolerances.",
+      "kind": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "output": "allergy[]"
+    },
+    {
+      "name": "get_labs_vitals",
+      "description": "Lab results or vital signs, newest first.",
+      "kind": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": [
+              "laboratory",
+              "vital-signs"
+            ],
+            "default": "laboratory"
+          },
+          "code": {
+            "type": "string",
+            "description": "LOINC code to filter on, e.g. 4548-4 for HbA1c"
+          },
+          "since": {
+            "type": "string",
+            "description": "YYYY-MM-DD"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 20
+          }
+        },
+        "additionalProperties": false
+      },
+      "output": "observation[]"
+    },
+    {
+      "name": "list_encounters",
+      "description": "Visits and admissions, newest first.",
+      "kind": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "since": {
+            "type": "string",
+            "description": "YYYY-MM-DD"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 10
+          }
+        },
+        "additionalProperties": false
+      },
+      "output": "encounter[]"
+    },
+    {
+      "name": "list_appointments",
+      "description": "Scheduled appointments in a date range (defaults to today onward). Not every EHR offers this to backend apps.",
+      "kind": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "since": {
+            "type": "string",
+            "description": "YYYY-MM-DD"
+          },
+          "until": {
+            "type": "string",
+            "description": "YYYY-MM-DD"
+          }
+        },
+        "additionalProperties": false
+      },
+      "output": "appointment[]"
+    },
+    {
+      "name": "list_documents",
+      "description": "Clinical notes and documents (metadata only). Use read_document for the text.",
+      "kind": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "since": {
+            "type": "string",
+            "description": "YYYY-MM-DD"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 10
+          }
+        },
+        "additionalProperties": false
+      },
+      "output": "document[]"
+    },
+    {
+      "name": "read_document",
+      "description": "Plain text of one document from list_documents.",
+      "kind": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "document_id": {
+            "type": "string"
+          },
+          "max_chars": {
+            "type": "integer",
+            "minimum": 200,
+            "maximum": 20000,
+            "default": 4000
+          }
+        },
+        "required": [
+          "document_id"
+        ],
+        "additionalProperties": false
+      },
+      "output": "document_text"
+    },
+    {
+      "name": "get_coverage",
+      "description": "Insurance coverage on file.",
+      "kind": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "output": "coverage[]"
+    },
+    {
+      "name": "create_note",
+      "description": "Save a plain-text clinical note to the chart. Requires writes to be enabled and a human approval.",
+      "kind": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 20000
+          },
+          "encounter_id": {
+            "type": "string",
+            "description": "Encounter to file the note under. Defaults to the most recent one where the EHR requires an encounter."
+          }
+        },
+        "required": [
+          "title",
+          "text"
+        ],
+        "additionalProperties": false
+      },
+      "output": "document"
+    }
+  ]
+}
